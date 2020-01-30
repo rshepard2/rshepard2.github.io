@@ -67,5 +67,20 @@
 
 	var popup = L.popup();
 	//here you could set the attributes of the popup instead of setting each to specific text
+	
+		var LoveLibrary = {
+    "type": "Feature",
+    "properties": {
+        "name": "Love Library",
+        "amenity": "Library",
+        "popupContent": "This is a library!"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-96.702572, 40.817804]
+    }
+};
+
+	L.geoJSON(LoveLibrary,{}).addTo(mymap);
 
 </script>

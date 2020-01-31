@@ -1,0 +1,19 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "VOTE_NUMBER": 1500,
+        "Type": "Warren"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -105.83129882812499,
+          39.842286020743394
+        ]
+      }
+    }
+  ]
+}

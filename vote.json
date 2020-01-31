@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "VOTE_NUMBER": 1500,
+        "VOTE_NUMBER": 150000,
         "Type": "Warren"
       },
       "geometry": {

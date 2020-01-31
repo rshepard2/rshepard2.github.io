@@ -14,6 +14,20 @@
           39.842286020743394
         ]
       }
+    },
+	{
+      "type": "Feature",
+      "properties": {
+        "VOTE_NUMBER": 250000,
+        "Type": "Sanders"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -105.83129882812499,
+          39.842286020743394
+        ]
+      }
     }
   ]
 }

@@ -145,7 +145,7 @@ function createSliderUI(timestamps) {
           'type':'range',
           'max': timestamps[timestamps.length-1],
           'min':timestamps[0],
-          'step': 10, // Change this to match the numeric interval between adjacent timestamps
+          'step': 1, // Change this to match the numeric interval between adjacent timestamps
           'value': String(timestamps[0])
         })
         .on('input change', function() {

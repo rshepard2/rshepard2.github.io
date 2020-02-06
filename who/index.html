@@ -1,1 +1,58 @@
+<!DOCTYPE HTML>
+<html>
 
+<head>
+	<title>WHO Global Vaccination Rates</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/4.1.1/normalize.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+	<header>
+		<h1>Global Vaccination Rates</h1>
+		<div id="ui">Select Country:
+			<select id="select-country"></select>
+		</div>
+	</header>
+
+	<div id="chart-legend">
+		<svg></svg>
+	</div>
+
+	<div id="chart">
+		<svg></svg>
+	</div>
+
+	<div id="map">
+		<svg></svg>
+	</div>
+
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
+	<script src="https://d3js.org/topojson.v1.min.js"></script>
+
+
+
+
+	<!--	  <script src="//d3js.org/d3.geo.projection.v0.min.js"></script>-->
+	<!--        <script src="assets/js/d3.geo.polyhedron.min.js"></script>-->
+
+
+
+	<script src="js/app.el.js"></script>
+	<script src="js/app.processData.js"></script>
+	<script src="js/app.chartLegend.js"></script>
+	<script src="js/app.chart.js"></script>
+	<script src="js/app.map.js"></script>
+	<script src="js/app.ui.js"></script>
+	<script src="js/app.init.js"></script>
+
+	<script type="text/javascript">
+		document.onload = app.init();
+	</script>
+
+</body>
+
+</html>

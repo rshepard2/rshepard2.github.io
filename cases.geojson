@@ -1,0 +1,320 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "331314",
+                "December-02": "487455",
+                "December-03": "496973",
+                "December-04": "425022",
+                "December-05": "394017",
+                "December-06": "416474",
+                "December-07": "331314",
+                "id": "1",
+                "name": "Atlanta"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -84.3881,
+                    33.7489
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "949708",
+                "December-02": "939024",
+                "December-03": "905759",
+                "December-04": "786775",
+                "December-05": "736014",
+                "December-06": "651154",
+                "December-07": "620961",
+                "id": "2",
+                "name": "Baltimore"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.7606,
+                    39.2846
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "3620962",
+                "December-02": "3550404",
+                "December-03": "3366957",
+                "December-04": "3005072",
+                "December-05": "2783726",
+                "December-06": "2896016",
+                "December-07": "2695598",
+                "id": "3",
+                "name": "Chicago"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -87.65,
+                    41.85
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "434462",
+                "December-02": "679684",
+                "December-03": "844401",
+                "December-04": "904078",
+                "December-05": "1006877",
+                "December-06": "1188580",
+                "December-07": "1197816",
+                "id": "4",
+                "name": "Dallas"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -96.8039,
+                    32.7828
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "415786",
+                "December-02": "493887",
+                "December-03": "514678",
+                "December-04": "492365",
+                "December-05": "467610",
+                "December-06": "554636",
+                "December-07": "600158",
+                "id": "5",
+                "name": "Denver"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -104.9842,
+                    39.7392
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "1849568",
+                "December-02": "1670144",
+                "December-03": "1511482",
+                "December-04": "1203339",
+                "December-05": "1027974",
+                "December-06": "951270",
+                "December-07": "713777",
+                "id": "6",
+                "name": "Detroit"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -83.3794,
+                    42.3524
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "596163",
+                "December-02": "938219",
+                "December-03": "1232802",
+                "December-04": "1595138",
+                "December-05": "1630553",
+                "December-06": "1953631",
+                "December-07": "2099451",
+                "id": "7",
+                "name": "Houston"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3631,
+                    29.7631
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "1970358",
+                "December-02": "2479015",
+                "December-03": "2816061",
+                "December-04": "2966850",
+                "December-05": "3485398",
+                "December-06": "3694820",
+                "December-07": "3792621",
+                "id": "8",
+                "name": "Los Angeles"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -118.2428,
+                    34.0522
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "249276",
+                "December-02": "291688",
+                "December-03": "334859",
+                "December-04": "346865",
+                "December-05": "358548",
+                "December-06": "362470",
+                "December-07": "399457",
+                "id": "9",
+                "name": "Miami"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -80.1924,
+                    25.7738
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "7891957",
+                "December-02": "7781984",
+                "December-03": "7894862",
+                "December-04": "7071639",
+                "December-05": "7322564",
+                "December-06": "8008278",
+                "December-07": "8175133",
+                "id": "10",
+                "name": "New York"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.0064,
+                    40.7142
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "2071605",
+                "December-02": "2002512",
+                "December-03": "1948609",
+                "December-04": "1688210",
+                "December-05": "1585577",
+                "December-06": "1517550",
+                "December-07": "1526006",
+                "id": "11",
+                "name": "Philadelphia"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.1642,
+                    39.9522
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "106818",
+                "December-02": "439170",
+                "December-03": "581562",
+                "December-04": "789704",
+                "December-05": "983403",
+                "December-06": "1321045",
+                "December-07": "1445632",
+                "id": "12",
+                "name": "Phoenix"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -112.0746,
+                    33.4539
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "775357",
+                "December-02": "740316",
+                "December-03": "715674",
+                "December-04": "678974",
+                "December-05": "723959",
+                "December-06": "776733",
+                "December-07": "805235",
+                "id": "13",
+                "name": "San Francisco"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -122.4183,
+                    37.775
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "467591",
+                "December-02": "557087",
+                "December-03": "530831",
+                "December-04": "493846",
+                "December-05": "516259",
+                "December-06": "563374",
+                "December-07": "608660",
+                "id": "14",
+                "name": "Seattle"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -122.3331,
+                    47.6097
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "December-01": "802178",
+                "December-02": "763956",
+                "December-03": "756510",
+                "December-04": "638333",
+                "December-05": "606900",
+                "December-06": "572059",
+                "December-07": "601723",
+                "id": "15",
+                "name": "Washington"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.03,
+                    38.89
+                ]
+            }
+        }
+    ]
+}

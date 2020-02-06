@@ -1,0 +1,19 @@
+{
+
+    "BCG" : "Baccille Calmette Guerin vaccine",
+    "DTP1" : "Diphtheria toxoid, tetanus toxoid and pertussis vaccine, 1st dose",
+    "DTP3" : "Diphtheria toxoid, tetanus toxoid and pertussis vaccine, 3rd dose",
+    "HepB_BD" : "Hepatitis B birth dose 24 hours after birth",
+    "HepB3" : "Third dose Hepatitis B vaccine",
+    "Hib3" : "Third dose of Haemophilus influenzae type B vaccine",
+    "IPV1" : "First dose of inactivated Polio containing vaccine",
+    "MCV1" : "Measles-containing vaccine",
+    "MCV2" : "2nd dose of measles containing vaccine",
+    "PAB" : "Protection at birth",
+    "PCV3" : "3rd dose of pneumococcal conjugate vaccine",
+    "Pol3" : "3rd dose of polio vaccine",
+    "RCV1" : "1st dose of Rubella containing vaccine",
+    "RotaC" : "Rotavirus",
+    "YFV" : "Yellow fever"
+
+}

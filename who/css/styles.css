@@ -1,0 +1,154 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+body {
+/*  background-color: whitesmoke;*/
+  font-family: "Open Sans", sans-serif;
+  color: #666;
+}
+h1 {
+  margin: 0 0 0 20px;
+  padding: 0;
+  font-weight: 600;
+  color: rgba(0,0,0,.2);
+  display: inline-block;
+  font-size: 1.8em;
+}
+
+/* UI */
+
+#ui {
+  display: inline-block;
+  margin: 20px 0 0 120px;
+  background: rgba(255, 255, 255, .6);
+  border-radius: 3px;
+}
+#ui button {
+    padding: 6px 15px;
+    font-size: 1.2em;
+}
+#ui select {
+  /*-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;*/
+  margin-left: 10px;
+  max-width: 250px;
+}
+#ui option {
+    font-size: 1.3em;
+}
+
+/* MAP */
+#map {
+  width: 760px;
+  height: 300px;
+  display: inline-block;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+.stroke {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1px;
+}
+
+.fill {
+  fill: #fff;
+}
+
+.graticule {
+  fill: none;
+  stroke: #999;
+  stroke-width: .3px;
+  stroke-opacity: .2;
+}
+
+.land {
+  fill: #666;
+}
+
+.country {
+/*  fill: #888;*/
+  stroke: whitesmoke;
+  stroke-width: .5px;
+}
+.country:hover {
+    cursor: pointer;
+}
+
+/* CHART LEGEND */
+
+#chart-legend {
+    width: 400px;
+    height: 400px;
+    margin-left: 20px;
+    display: inline;
+    position: static;
+    float: left;
+
+}
+#chart-legend h2 {
+    font-size: 1.2em;
+}
+#chart-legend svg {
+
+}
+#chart-legend > svg > g:hover {
+    cursor: pointer;
+
+}
+
+
+
+/* CHART */
+
+#chart {
+  /*position: absolute;*/
+  /*top: 70px;
+  right: 20px;*/
+  /*width: 450px;
+  height: 300px;*/
+  width: 540px;
+  height: 300px;
+  display: inline-block;
+  margin-top: 30px;
+}
+/*
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+*/
+
+.axis {
+  font: 14px "Open Sans";
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #666;
+  shape-rendering: crispEdges;
+}
+
+.axis--x path {
+/*  display: none;*/
+}
+.vaccine-line {
+    fill: none;
+    stroke-width: 2px;
+}
+/*
+.dot {
+  fill: white;
+  stroke: blue;
+  stroke-width: 1.5px;
+}
+*/

@@ -56,7 +56,7 @@ drawLegend(legendTable)
 
 
 //add BaseMap
-var map = L.map('map', {center: [41.651128,-91.530168],
+var map = L.map('map', {center: [41.81128,-96.6880168],
   zoom: 13,
   reuseTiles: true})
   .addLayer(new L.TileLayer("http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"));
@@ -69,20 +69,20 @@ var g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
 function makeMap(){
   //group variable to zoom behavior works correctly
-  d3.json('https://markpooley.github.io/mapping/iowa_city_growth/data/ic_buildings_simple.topojson', function(error, buildings){
+  d3.json('https://rshepard2.github.io/Lab9/data/LNK_BLD_YR_TOPOJSON.topojson', function(error, buildings){
   var collection = topojson.feature(buildings, buildings.objects.collection);
   var transform = d3.geo.transform({point: projectPoint}),
       path = d3.geo.path().projection(transform)
 
   //get min and max build year for the structures
   var minYear = d3.min(collection.features,function(d){
-      return d.properties.YearBuilt
+      return d.properties.RESYRBLT
     })
   if (minYear < 1750) {
     minYear = 1800;
   }
   var maxYear = d3.max(collection.features,function(d){
-      return d.properties.YearBuilt
+      return d.properties.RESYRBLT
     })
   var buildCount = collection.features.length;
 

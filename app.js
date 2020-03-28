@@ -149,13 +149,13 @@ function makeMap(){
     .enter()
     .append('rect')
     .attr('id',function(d){
-      return 'yr'+d.properties.YearBuilt
+      return 'yr'+d.properties.RESYRBLT
     })
     .attr('fill',function(d){
-      return colorScale(d.properties.YearBuilt)
+      return colorScale(d.properties.RESYRBLT)
     })
     .attr('x',function(d){
-      return xScale(d.properties.YearBuilt) + margin.left
+      return xScale(d.properties.RESYRBLT) + margin.left
     })
     .attr('height',function(d){
       return graphHeight-margin.top-margin.bottom - yScale(d.properties.COUNT_Year)
@@ -191,9 +191,9 @@ function makeMap(){
     //***************************
     bars.on('mouseover',function(d){
       if (barMouseOver == true){
-        var yr = d.properties.YearBuilt
+        var yr = d.properties.RESYRBLT
         var buildCount = d.properties.COUNT_Year
-        var buildID = '#YearBuilt' + yr;
+        var buildID = '#RESYRBLT' + yr;
 
         d3.select(buildID).style('opacity',1)
         d3.select(this).style('opacity',1);
@@ -215,7 +215,7 @@ function makeMap(){
     })
     bars.on('mouseout',function(d){
       if (barMouseOver == true){
-        var yr = d.properties.YearBuilt;
+        var yr = d.properties.RESYRBLT;
         var buildID = '#YearBuilt' + yr;
         d3.select(buildID).style('opacity',0.60)
         d3.select(this).style('opacity',0.75);
@@ -242,7 +242,7 @@ function makeMap(){
       if (d.properties.YearBuilt <= 0){
         color = 'rgb(224,224,224)'
       } else {
-        color = colorScale(d.properties.YearBuilt)
+        color = colorScale(d.properties.RESYRBLT)
       }
       return color
     })
@@ -253,7 +253,7 @@ function makeMap(){
     buildings.on('mouseover',function(d){
       //grab the year
       if (buildingMouseOver == true) {
-        var yr = d.properties.YearBuilt;
+        var yr = d.properties.RESYRBLT;
         var barID = '#yr'+yr;
         if (yr  < 1800){
 
@@ -280,7 +280,7 @@ function makeMap(){
       if (buildingMouseOver == true){
         //transition text back
 
-        var barID = '#yr'+d.properties.YearBuilt;
+        var barID = '#yr'+d.properties.RESYRBLT;
         d3.select(barID).style('opacity',0.75)
         d3.select(this).style('opacity',0.60)
 
@@ -310,7 +310,7 @@ function makeMap(){
       //animate function
       function animate(data,index){
 
-        var year = data[index].properties.YearBuilt
+        var year = data[index].properties.RESYRBLT
         var selector = '#YearBuilt'+ year;
         var barSelector = '#yr' + year;
         var legSelector = '#legyr' + year;

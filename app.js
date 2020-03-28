@@ -216,7 +216,7 @@ function makeMap(){
     bars.on('mouseout',function(d){
       if (barMouseOver == true){
         var yr = d.properties.RESYRBLT;
-        var buildID = '#YearBuilt' + yr;
+        var buildID = '#RESYRBLT' + yr;
         d3.select(buildID).style('opacity',0.60)
         d3.select(this).style('opacity',0.75);
         d3.select('#buildyear').text('Year: ')
@@ -236,10 +236,10 @@ function makeMap(){
     .attr("d",path)
     .attr('class','buildings')
     .attr('id',function(d){
-      return 'YearBuilt' + d.properties.YearBuilt
+      return 'RESYRBLT' + d.properties.RESYRBLT
     })
     .attr('fill', function(d){
-      if (d.properties.YearBuilt <= 0){
+      if (d.properties.RESYRBLT <= 0){
         color = 'rgb(224,224,224)'
       } else {
         color = colorScale(d.properties.RESYRBLT)

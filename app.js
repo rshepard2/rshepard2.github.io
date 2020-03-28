@@ -56,7 +56,7 @@ drawLegend(legendTable)
 
 
 //add BaseMap
-var map = L.map('map', {center: [41.651128, -96.653017],
+var map = L.map('map', {center: [40.813968, -96.693107],
   zoom: 12,
   reuseTiles: true})
   .addLayer(new L.TileLayer("http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"));
@@ -79,7 +79,7 @@ function makeMap(){
       return d.properties.RESYRBLT
     })
   if (minYear < 1750) {
-    minYear = 1800;
+    minYear = 1860;
   }
   var maxYear = d3.max(collection.features,function(d){
       return d.properties.RESYRBLT
@@ -110,7 +110,7 @@ function makeMap(){
     //.domain([0,d3.max(collection.features, function(d){
     //  return d.properties.RESYRBLT
     //})])
-    .domain([0,1500])
+    .domain([0,2500])
     .range([(graphHeight-margin.top-margin.bottom),0])
     //.nice()
 

@@ -84,7 +84,7 @@ function makeMap(){
   var maxYear = d3.max(collection.features,function(d){
       return d.properties.RESYRBLT
     })
-  var buildCount = collection.features.length;
+  var build = collection.features.length;
 
   //set up graph axes
   //*****************************************
@@ -102,13 +102,13 @@ function makeMap(){
 
    //set up yAxis
    var maxBuildCount = d3.max(collection.features, function(d){
-    return d.properties.COUNT_Year
+    return d.properties.RESYRBLT
    });
    var yearPos = 1500;
 
    var yScale = d3.scale.linear()
     //.domain([0,d3.max(collection.features, function(d){
-    //  return d.properties.COUNT_Year
+    //  return d.properties.RESYRBLT
     //})])
     .domain([0,1500])
     .range([(graphHeight-margin.top-margin.bottom),0])
@@ -158,11 +158,11 @@ function makeMap(){
       return xScale(d.properties.RESYRBLT) + margin.left
     })
     .attr('height',function(d){
-      return graphHeight-margin.top-margin.bottom - yScale(d.properties.COUNT_Year)
+      return graphHeight-margin.top-margin.bottom - yScale(d.properties.RESYRBLT)
     })
     .attr('width',5)
     .attr('y',function(d){
-      return yScale(d.properties.COUNT_Year)
+      return yScale(d.properties.RESYRBLT)
     })
     .style('opacity',0.75)
 
@@ -192,12 +192,12 @@ function makeMap(){
     bars.on('mouseover',function(d){
       if (barMouseOver == true){
         var yr = d.properties.RESYRBLT
-        var buildCount = d.properties.COUNT_Year
+        var buildCount = d.properties.RESYRBLT
         var buildID = '#RESYRBLT' + yr;
 
         d3.select(buildID).style('opacity',1)
         d3.select(this).style('opacity',1);
-        d3.select('#buildyear').text('Year: '+ yr + ', Count: ' +d.properties.COUNT_Year)
+        d3.select('#buildyear').text('Year: '+ yr + ', Count: ' +d.properties.RESYRBLT)
         d3.select('#yearLineCount').style('opacity',1)
           .attr('x',xScale(yr) + margin.left+ 2.5)
           .attr('y',yScale(buildCount) + 5)
@@ -266,8 +266,8 @@ function makeMap(){
             .attr('x',xScale(yr)+margin.left + 2.5)
           d3.select('#yearLineCount').style('opacity',1)
             .attr('x',xScale(yr)+margin.left+2.5)
-            .attr('y',yScale(d.properties.COUNT_Year)+2.5)
-            .text(d.properties.COUNT_Year)
+            .attr('y',yScale(d.properties.RESYRBLT)+2.5)
+            .text(d.properties.RESYRBLT)
           d3.select('#yearLineYear').style('opacity',1)
             .attr('x',xScale(yr)+margin.left+2.5)
             .attr('y',yScale(yearPos))
@@ -314,7 +314,7 @@ function makeMap(){
         var selector = '#YearBuilt'+ year;
         var barSelector = '#yr' + year;
         var legSelector = '#legyr' + year;
-        var buildCount = data[index].properties.COUNT_Year
+        var buildCount = data[index].properties.RESYRBLT
         d3.select('#yearLineCount').style('opacity',1)
         d3.select('#yearLineYear').style('opacity',1)
 
@@ -332,10 +332,10 @@ function makeMap(){
             //update bars
             d3.select(barSelector).transition().duration(450)
                 .attr('height',function(d){
-                  return graphHeight-margin.top-margin.bottom - yScale(d.properties.COUNT_Year)
+                  return graphHeight-margin.top-margin.bottom - yScale(d.properties.RESYRBLT)
                 })
                 .attr('y',function(d){
-                  return yScale(d.properties.COUNT_Year)
+                  return yScale(d.properties.RESYRBLT)
                 })
             d3.select('#yearLine').style('opacity',.75)
               .transition()

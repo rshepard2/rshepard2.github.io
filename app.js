@@ -56,8 +56,8 @@ drawLegend(legendTable)
 
 
 //add BaseMap
-var map = L.map('map', {center: [41.81128,-96.6880168],
-  zoom: 13,
+var map = L.map('map', {center: [41.651128, -96.653017],
+  zoom: 12,
   reuseTiles: true})
   .addLayer(new L.TileLayer("http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"));
 

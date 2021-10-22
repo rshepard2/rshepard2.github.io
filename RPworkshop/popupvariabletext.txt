@@ -1,0 +1,13 @@
+            var onEachFeature = function(feature, layer) {
+        			if (feature.properties) {
+        				var prop = feature.properties;
+
+        				var popup = '<h3>'+prop['Location']+'</h3>'+prop['Description'];
+        					// add known info about event to the description
+
+        				 // you must create a layer property on each feature or else
+        				 // the search results wont know where the item is on the map / layer
+        				  feature.layer = layer;
+        				  layer.bindPopup(popup, {maxWidth: "auto"});
+        				}
+        			  }; 

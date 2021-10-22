@@ -1,0 +1,24 @@
+function getColor(value) {
+                return value == "Lethal Violence" ? '#FF5733':
+                       value == "Property Destroyed"  ? '#FFD400':
+                                     '#FFFFFF';
+            };
+
+       function style(feature){
+                return {
+                    fillColor: getColor(feature.properties.Actions),
+                    stroke: true,
+                    weight: 2,
+                    color: 'black',
+                    fillOpacity: .7,
+                    radius: 8
+                };
+            }
+
+    var states = L.geoJson(states).addTo(map);
+
+    var data = L.geoJson(data, {
+      pointToLayer: function(feature, latlng) {
+        return L.circleMarker(latlng, style(feature))
+}
+}).addTo(map);

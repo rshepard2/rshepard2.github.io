@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <title>Leaflet.timeline</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://skeate.dev/Leaflet.timeline/examples/leaflet.timeline.js"></script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #info {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 25vw;
+        padding: 1em;
+      }
+      #map {
+        position: fixed;
+        top: 0;
+        left: 25vw;
+        bottom: 0;
+        right: 0;
+      }
+      .leaflet-bottom.leaflet-left {
+        width: 100%;
+      }
+      .leaflet-control-container .leaflet-timeline-controls {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="info">
+      <p>Flow data from:</p>
+      <ul id="displayed-list"></ul>
+    </div>
+    <div id="map"></div>
+
+    <script>
+	 function getColorFor(value) {
+    return value >= 1 ? '#2166ac':
+    value >= 0  ? '#ffffbf':
+                  '#b2182b';
+            }
+			
+			
+var minValue = 1;
+var minRadius = 5;
+
+	  function calcRadius(val) {
+return 1.0083 * Math.pow(val/minValue,0.5716)*minRadius;
+}
+
+
+      var background = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 18,
+	ext: 'png'
+});
+
+      var map = L.map("map", {
+        layers: [background],
+        center: new L.LatLng(29, 70),
+        zoom: 6
+      });
+
+      // this is just used to show the polls in the sidebar
+      function updateList(timeline) {
+        var displayed = timeline.getLayers();
+        var list = document.getElementById("displayed-list");
+        list.innerHTML = "";
+        displayed.forEach(function (elec) {
+          var li = document.createElement("li");
+          li.innerHTML = elec.feature.properties.Location + ' -  Flow: ' + elec.feature.properties.Flow + ', Time: ' + elec.feature.properties.Date;
+          list.appendChild(li);
+        });
+      }
+
+      // this is similar to previous example --
+      function onLoadData(data) {
+        var getInterval = function (elec) {
+          return {
+            start: elec.properties.start,
+            end: elec.properties.end,
+          };
+        };
+        var timelineControl = L.timelineSliderControl({
+          formatOutput: function (date) {
+            return new Date(date).toString();
+          },
+        });
+        var timeline = L.timeline(data, {
+          getInterval: getInterval,
+          pointToLayer: function (data, latlng) {
+            var diff = (data.properties.Flow);
+            return L.circleMarker(latlng, {
+              radius: calcRadius((data.properties.Flow)/4000),
+              color: getColorFor(data.properties.Flow),
+              fillColor: getColorFor(data.properties.Flow),
+            }).bindPopup('<p>' + 'Location:' + data.properties.Location + '</p>');
+          },
+        });
+        timelineControl.addTo(map);
+        timelineControl.addTimelines(timeline);
+        timeline.addTo(map);
+        timeline.on("change", function (e) {
+          updateList(e.target);
+        });
+        updateList(timeline);
+      }
+	  
+
+    </script>
+    <script src="https://rshepard2.github.io/usmariver6.jsonp"></script>
+  </body>
+</html>

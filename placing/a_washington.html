@@ -67,7 +67,7 @@ to the Center for Digital Research in the Humanities, University of Nebraska Lib
 			'<a href="//creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 			'Imagery © <a href="h//mapbox.com">Mapbox</a>'; 
 	  
-	 var b_light = L.tileLayer({url: "https://cors1601.unl.edu/geoserver/gwc/service/wms/cww/boschke1857_light", format: "image/png", transparent:true}),
+	 var b_light = L.tileLayer.WMS({url: "https://cors1601.unl.edu/geoserver/gwc/service/wms/cww/boschke1857_light", format: "image/png", transparent:true}),
 	 grayscale = L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmNzaGVwYXJkIiwiYSI6IjYwYjI0NzdmNDQwM2YzNTc1ODI2NWZhNTU1ZTVmNjY4In0.ct_UnOxwtV_WIGwzyG0Rxw', {id: 'mapbox.light', attribution: mbAttr});
 	 
       var map = L.map('map', {

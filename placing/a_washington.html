@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<!-- notes 
+Rob Shepard, Assistant Professor of Geography, University of Nebraska
+Placing Segregation
+
+Migrated on December 10, 2021, from University of Iowa Libraries, where it was housed since August 2017
+to the Center for Digital Research in the Humanities, University of Nebraska Libraries
+
+-->
+<html>
+  <head>
+    <title>Washington, 1860</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- INCLUDES -->
+      <!-- include leaflet / slider css, js local files -->
+      <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
+      <link rel="stylesheet" href="public/leaflet-1/leaflet.css" />
+	  <!--OLD LINK IS HERE - <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" /> -->
+      <script src="public/leafletSlider-1.0.2/leaflet.SliderControl.min.js"></script>
+      <!-- include a pretty little stamenizer -->
+      <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+      <!-- include fuse first, then the leaflet plugins that use fuse searching -->
+      <script src="public/fuse-1.2.1/fuse.min.js"></script>
+      <script src="public/leafletFuseSearch-noVersion/leafletfuse.js"></script>
+      <link rel="stylesheet" href="public/leafletFuseSearch-noVersion/leafletfuse.css" type="text/css"/>
+      <!-- jquery scripts and css -->
+      <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
+      <!-- Include this library for mobile touch support (not tested) -->
+      <script src="public/jqueryUiTouchPunch-0.2.2/jquery.ui.touch-punch.min.js"></script>
+	    <!-- Load Esri Leaflet from CDN -->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet.js"></script>
+      <!-- include json data points -->
+      <script src="data8.js"></script>
+	  <script src="poc.js"></script>
+	  <script src="rich.js"></script>
+	  <script src="merch.js"></script>
+	  <script src="work.js"></script>
+	  <script src="washirish.js"></script>
+	  <script src="washgermans.js"></script>
+	  <link rel="stylesheet" type="text/css" href="css/style.css">
+	  <link rel="stylesheet" type="text/css" href="css/navwrap.css">
+  </head>
+
+
+  <body>
+
+    <!-- provide the map with a div to live inside -->
+    <div id="map" style="width: 100%; height: 650px"></div>
+<!--<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>. -->
+    <script>
+      // set up with openstreetmaps
+	  
+	  	  var myIcon = L.icon({
+    iconUrl: 'my-icon.png',
+    iconRetinaUrl: 'my-icon@2x.png',
+    iconSize: [1, 1],
+    iconAnchor: [1, 1],
+    popupAnchor: [-1, -1]
+});
+	  
+	
+		 var mbAttr = 'Map data &copy; <a href="//openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			'<a href="//creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="h//mapbox.com">Mapbox</a>'; 
+	  
+	 var esrilayer =  L.esri.tiledMapLayer({url: "https://gis.lib.uiowa.edu/gislib1/rest/services/placing/b1857/MapServer"}),
+	 grayscale = L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmNzaGVwYXJkIiwiYSI6IjYwYjI0NzdmNDQwM2YzNTc1ODI2NWZhNTU1ZTVmNjY4In0.ct_UnOxwtV_WIGwzyG0Rxw', {id: 'mapbox.light', attribution: mbAttr});
+	 
+      var map = L.map('map', {
+	  center: [38.892990, -77.024081],
+	  zoom: 15,
+	  layers: [esrilayer] 
+	  });
+
+      // onEachFeature generate a popup for each location
+      // those params are coming automatically from the geoJson method
+      var onEachFeature = function(feature, layer) {
+        if (feature.properties) {
+          var prop = feature.properties;
+          // make a cool little html popup with properties
+            var popup = '<h3>'+prop['FNAME']+' '+prop['LNAME']+'</h3>'+'<strong>Race/Gender: </strong>'+prop['RACE']+' '+prop['GENDER']+'<br><strong>Occupation: </strong>'+prop['OCCUPATION']+'<br><strong>Age: </strong>'+prop['AGE']+'<br><strong>Family Estate: $</strong>'+prop['FAMEST']+'<br> <strong>Fam. Real Estate: $</strong>'+prop['FAMREAL']+'<br><strong>Slaveowner: </strong>'+prop['SLAVEOWNER']+'<br><strong>Address: </strong>'+prop['ADDRESS']+'<br><br><i>details from Census Bureau and city directories</i>';
+            // add known info about event to the description
+          
+          // you must create a layer property on each feature or else
+          // the search results won't know where the item is on the map / layer
+          feature.layer = layer;
+          layer.bindPopup(popup, {maxWidth: "auto"});
+        }
+      }; // end onEachFeature
+
+      // used by the generic "all locations" layer
+      var blueCircleMarkers = {
+        radius: 4,
+        fillColor: "#00AEEF",
+        color: "#3978BF",
+        weight: 1,
+        opacity: 0.8,
+        fillOpacity: 0.5
+      };
+
+      // used by the timesliding layer
+      var orangeCircleMarkers = {
+        radius: 5,
+        fillColor: "#ED1C24",
+        color: "#ED1C24",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.7
+      };
+
+      // used by the searching layer - made them yellow instead of green
+      var greenCircleMarkers = {
+        radius: 5,
+        fillColor: "#ffff00",
+        color: "#286933",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.7
+      };
+	  
+	  var selectedmarker = {
+	  radius: 6,
+        fillColor: "#f7971c",
+        color: "#f7971c",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.9
+      };
+
+      // generate a layer of markers for all the locations
+      L.geoJson(washGeoJson, {
+        // add popups
+        onEachFeature: onEachFeature,
+        pointToLayer: function(feature, latlng) {
+          return L.circleMarker(latlng, blueCircleMarkers);
+        }
+      }).addTo(map);
+
+       //now make a timeline layer that the slider can manipulate - REMOVED
+      var timelineLayer = L.geoJson(washGeoJson, {
+        onEachFeature: onEachFeature,
+        pointToLayer: function(feature, latlng) {
+          return L.circleMarker(latlng, orangeCircleMarkers);
+        }
+      });
+
+      // make a search layer
+      // now make a timeline layer that the slider can manipulate
+      var searchLayer = L.geoJson(washGeoJson, {
+        onEachFeature: onEachFeature,
+        pointToLayer: function(feature, latlng) {
+          return L.circleMarker(latlng, greenCircleMarkers);
+        }
+      });
+      // searchLayer.addTo(map);
+
+
+      // create the slider   - REMOVED
+      var sliderControl = L.control.sliderControl({
+          position: "topright",
+          layer: timelineLayer,
+          range: true // gives it a bottom and a top slider
+      });
+
+ //     map.addControl(sliderControl);
+  //    sliderControl.startSlider(); // initialize
+
+      // Add fuse search control
+      var searchOptions = {
+        position: 'topleft',
+        title: 'Search',
+        placeholder: 'Example: John Smith',
+        maxResultLength: 10,
+        caseSensitive: false,
+        showInvisibleFeatures: true,
+        layerToToggle: searchLayer,
+        threshold: 0.5, // default is .5, will match imperfect results
+        showResultFct: function(feature, container) {
+          props = feature.properties;
+          var name = L.DomUtil.create('b', null, container);
+          name.innerHTML = props.LNAME;
+
+          container.appendChild(L.DomUtil.create('br', null, container));
+
+          var cat = props.LNAME ? props.FNAME : props.OCCUPATION,
+              info = cat;
+          container.appendChild(document.createTextNode(info));
+        }
+      };
+      var searchControl = L.control.fuseSearch(searchOptions);
+      map.addControl(searchControl);
+      searchControl.indexFeatures(washGeoJson, ['LNAME']);
+
+      displayFeatures(washGeoJson, searchLayer);
+
+      function displayFeatures(features, layer) {
+        var popup = L.DomUtil.create('div', 'tiny-popup', map.getContainer());
+        for (var id in features) {
+          var feat = features[id];
+          var cat = feat.properties.categorie;
+          var site = L.geoJson(feat, {
+            pointToLayer: function(feature, latLng) {
+              var marker = L.marker(latLng, {
+			    icon: myIcon,
+                keyboard: false,
+                riseOnHover: true
+              });
+              if (! L.touch) {
+                marker.on('mouseover', function(position) {
+                  // TODO can put text in here when hovering search
+                  // popup.innerHTML = 'Testing';
+                  // L.DomUtil.setPosition(popup, pos);
+                  // L.DomUtil.addClass(popup, 'visible');
+                }).on('mouseout', function(position) {
+                  L.DomUtil.removeClass(popup, 'visible');
+                });
+              }
+              return marker;
+            },
+            onEachFeature: onEachFeature
+          });
+          if (layer !== undefined) {
+              layer.addLayer(site);
+          }
+        }
+        return layer;
+      };
+	  //adds a layer for some other geojson, just change out "washgeojson" with another file
+	  
+	    var grayscale = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 20,
+	ext: 'png'
+});
+
+	 var poc = new L.geoJson(pocGeoJson, {
+	  onEachFeature: onEachFeature,
+pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, greenCircleMarkers);
+    }});
+	
+		 var washgermans = new L.geoJson(washgermans, {
+	  onEachFeature: onEachFeature,
+pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, greenCircleMarkers);
+    }});
+	
+		 var washirish = new L.geoJson(washirish, {
+	  onEachFeature: onEachFeature,
+pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, greenCircleMarkers);
+    }});
+
+	 var wealth = new L.geoJson(richGeoJson, {
+	  onEachFeature: onEachFeature,
+pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, greenCircleMarkers);
+    }});
+	
+	var merchant = new L.geoJson(merchGeoJson, {
+	  onEachFeature: onEachFeature,
+pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, greenCircleMarkers);
+    }});
+	
+	var working = new L.geoJson(workGeoJson, {
+	  onEachFeature: onEachFeature,
+pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, greenCircleMarkers);
+    }});
+	  
+	  
+	  		var overlays = {
+			"People of Color": poc,
+			"Born in Germany": washgermans,
+			"Born in Ireland": washirish,
+			"Wealthy Elite": wealth,
+			"Merchant Class": merchant,
+			"Working Class": working
+	  };
+	  
+			var baseMaps = {
+		//	"Historic": esrilayer,
+			"Switch to Modern Map": grayscale
+			};
+	  
+	  L.control.layers(baseMaps, overlays, {collapsed:false}).addTo(map);
+
+    </script>
+	
+  </body>
+</html>

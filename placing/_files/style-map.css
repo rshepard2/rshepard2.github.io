@@ -1,0 +1,62 @@
+/*
+ Theme Name:   Placing Segregation
+ Description:  Placing Segregation (toivo-lite child theme)
+ Author:       UI Libraries Studio
+ Template:     toivo-lite
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ Text Domain:  toivo-lite-child
+*/
+
+nav.breadcrumb-trail.breadcrumbs {
+	display:none;
+}
+
+span.byline {
+	display:none;
+}
+
+footer.entry-footer {
+	display:none;
+}
+
+.site-footer {
+	bottom: 0;
+	width:100%;
+	position: fixed;
+	/* display:none; */
+}
+
+#content > .wrap {
+	padding-bottom:0;
+	padding-top: 0;
+}
+
+.custom-header-image .site-branding {
+	padding: 0;
+	margin-bottom: 0;
+	margin-top: 20px;
+}
+
+#colophon .site-info {
+	padding-top: .2em;
+	padding-bottom: .2em;
+}
+
+.home #content > .wrap{
+	padding-top: 0;
+}
+
+.entry-content .front-img  {
+        float: left;
+        padding: 12px;
+	text-align: center;
+	display: inline-block;
+}
+
+.entry-content {
+        max-width: 1000px;
+        
+}
+
+/**/

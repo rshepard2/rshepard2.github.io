@@ -1,0 +1,123 @@
+/*  CSS styling for German Newspapers in Iowa map page */
+
+/*@font-face {
+	font-family: Fairview;
+	src: url(Fairview_Regular.otf);
+} */
+
+body {
+	background-color:#000000;
+}
+
+.stained-glass {
+	background-image:url(washpeople.png);
+	background-repeat:repeat-x;
+	background-size:1100px;
+	overflow-x:hidden;
+	height:100px;
+	margin: -50px -10px 0px -10px;
+}
+
+h1 {
+	color: #ffffff;
+    height: 32pt;
+	font-weight:light;
+    font-size: 34pt;
+    
+	text-align: left;
+	font-family:Georgia;
+}
+
+h2 {
+	font-size: 24pt;
+}
+
+h3 {
+	font-size: 18pt;
+}
+
+h4 {
+    color: #ffffff;
+	font-size: 16pt;
+}
+
+h5 {
+	font-size: 14pt;
+}
+
+h6 {
+    color: #ffffff;
+	font-size: 14pt;
+	font-weight:normal;
+}
+
+
+.letters h4 {
+	font-size: 12pt;
+}
+
+/* adding this site wide rule per lix's instruction on letters. is there a better way? */
+.main h1, .main h2, .main h3, .main h4, .main h5, .main h6 {
+	padding-bottom: .3em;
+} 
+
+p {
+	padding: .5em 0 .5em 0;
+}
+
+blockquote {
+	margin:0 2em .4em 2em;
+}
+
+.spaceleft {
+	margin-left: 20px;
+}
+.row {
+	width:100%;
+	clear:both;
+}
+.row_image {
+	text-align:center;
+	width: 25%;
+	text-align:center;
+	margin-left: auto;
+	margin-right:auto;
+	float:left;
+}
+.row_text, .row_text_50 {
+	width: 75%;
+	text-align:left;
+	margin-left:0px;
+	padding-left: 0px;
+	float:left;
+}
+.row_text_50 {
+	width: 50%;
+}
+.lead_in {
+	font-weight:bold;
+	font-variant:small-caps;
+}
+
+/* =========================================
+About section
+============================================*/
+
+.about_person {
+	clear: both;
+	padding-bottom: 15px;
+}
+
+.about_person img {
+	border: 2px solid #222c3b;
+	padding: 1px;
+}
+
+.about_person p {
+	padding: 0;
+	margin: 0;
+}
+
+.about h2 {
+	clear: both;
+}

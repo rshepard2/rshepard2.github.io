@@ -4,7 +4,7 @@
 Rob Shepard, Assistant Professor of Geography, University of Nebraska
 Placing Segregation
 
-Migrated on December 10, 2021, from University of Iowa Libraries, where it was housed since August 2017
+Migrated from University of Iowa Libraries, where it was housed  August 2017 - April 2023
 to the Center for Digital Research in the Humanities, University of Nebraska Libraries
 
 -->
@@ -67,13 +67,13 @@ to the Center for Digital Research in the Humanities, University of Nebraska Lib
 			'<a href="//creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 			'Imagery © <a href="h//mapbox.com">Mapbox</a>'; 
 	  
-	 var esrilayer =  L.esri.tiledMapLayer({url: "https://gis.lib.uiowa.edu/gislib1/rest/services/placing/b1857/MapServer"}),
+	 var b_light = L.tileLayer({url: "https://cors1601.unl.edu/geoserver/gwc/service/wms/cww/boschke1857_light", format: "image/png", transparent:true}),
 	 grayscale = L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmNzaGVwYXJkIiwiYSI6IjYwYjI0NzdmNDQwM2YzNTc1ODI2NWZhNTU1ZTVmNjY4In0.ct_UnOxwtV_WIGwzyG0Rxw', {id: 'mapbox.light', attribution: mbAttr});
 	 
       var map = L.map('map', {
 	  center: [38.892990, -77.024081],
 	  zoom: 15,
-	  layers: [esrilayer] 
+	  layers: [b_light] 
 	  });
 
       // onEachFeature generate a popup for each location
@@ -286,7 +286,7 @@ pointToLayer: function (feature, latlng) {
 	  };
 	  
 			var baseMaps = {
-		//	"Historic": esrilayer,
+		//	"Historic": b_light,
 			"Switch to Modern Map": grayscale
 			};
 	  

@@ -1,0 +1,524 @@
+<html>
+<head>
+        <title>Moose Copy</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="">
+    <style type="text/css">.rc-slider {
+  position: relative;
+  height: 14px;
+  padding: 5px 0;
+  width: 100%;
+  border-radius: 6px;
+  -ms-touch-action: none;
+      touch-action: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.rc-slider * {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.rc-slider-rail {
+  position: absolute;
+  width: 100%;
+  background-color: #e9e9e9;
+  height: 4px;
+  border-radius: 6px;
+}
+.rc-slider-track {
+  position: absolute;
+  left: 0;
+  height: 4px;
+  border-radius: 6px;
+  background-color: #abe2fb;
+}
+.rc-slider-handle {
+  position: absolute;
+  margin-left: -7px;
+  margin-top: -5px;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  cursor: -webkit-grab;
+  cursor: grab;
+  border-radius: 50%;
+  border: solid 2px #96dbfa;
+  background-color: #fff;
+  -ms-touch-action: pan-x;
+      touch-action: pan-x;
+}
+.rc-slider-handle:hover {
+  border-color: #57c5f7;
+}
+.rc-slider-handle:active {
+  border-color: #57c5f7;
+  box-shadow: 0 0 5px #57c5f7;
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+.rc-slider-handle:focus {
+  border-color: #57c5f7;
+  box-shadow: 0 0 0 5px #96dbfa;
+  outline: none;
+}
+.rc-slider-mark {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+}
+.rc-slider-mark-text {
+  position: absolute;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  color: #999;
+}
+.rc-slider-mark-text-active {
+  color: #666;
+}
+.rc-slider-step {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+}
+.rc-slider-dot {
+  position: absolute;
+  bottom: -2px;
+  margin-left: -4px;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #e9e9e9;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.rc-slider-dot-active {
+  border-color: #96dbfa;
+}
+.rc-slider-disabled {
+  background-color: #e9e9e9;
+}
+.rc-slider-disabled .rc-slider-track {
+  background-color: #ccc;
+}
+.rc-slider-disabled .rc-slider-handle,
+.rc-slider-disabled .rc-slider-dot {
+  border-color: #ccc;
+  box-shadow: none;
+  background-color: #fff;
+  cursor: not-allowed;
+}
+.rc-slider-disabled .rc-slider-mark-text,
+.rc-slider-disabled .rc-slider-dot {
+  cursor: not-allowed !important;
+}
+.rc-slider-vertical {
+  width: 14px;
+  height: 100%;
+  padding: 0 5px;
+}
+.rc-slider-vertical .rc-slider-rail {
+  height: 100%;
+  width: 4px;
+}
+.rc-slider-vertical .rc-slider-track {
+  left: 5px;
+  bottom: 0;
+  width: 4px;
+}
+.rc-slider-vertical .rc-slider-handle {
+  margin-left: -5px;
+  margin-bottom: -7px;
+  -ms-touch-action: pan-y;
+      touch-action: pan-y;
+}
+.rc-slider-vertical .rc-slider-mark {
+  top: 0;
+  left: 18px;
+  height: 100%;
+}
+.rc-slider-vertical .rc-slider-step {
+  height: 100%;
+  width: 4px;
+}
+.rc-slider-vertical .rc-slider-dot {
+  left: 2px;
+  margin-bottom: -4px;
+}
+.rc-slider-vertical .rc-slider-dot:first-child {
+  margin-bottom: -4px;
+}
+.rc-slider-vertical .rc-slider-dot:last-child {
+  margin-bottom: -4px;
+}
+.rc-slider-tooltip-zoom-down-enter,
+.rc-slider-tooltip-zoom-down-appear {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  display: block !important;
+  animation-play-state: paused;
+}
+.rc-slider-tooltip-zoom-down-leave {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  display: block !important;
+  animation-play-state: paused;
+}
+.rc-slider-tooltip-zoom-down-enter.rc-slider-tooltip-zoom-down-enter-active,
+.rc-slider-tooltip-zoom-down-appear.rc-slider-tooltip-zoom-down-appear-active {
+  animation-name: rcSliderTooltipZoomDownIn;
+  animation-play-state: running;
+}
+.rc-slider-tooltip-zoom-down-leave.rc-slider-tooltip-zoom-down-leave-active {
+  animation-name: rcSliderTooltipZoomDownOut;
+  animation-play-state: running;
+}
+.rc-slider-tooltip-zoom-down-enter,
+.rc-slider-tooltip-zoom-down-appear {
+  transform: scale(0, 0);
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.rc-slider-tooltip-zoom-down-leave {
+  animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+}
+@keyframes rcSliderTooltipZoomDownIn {
+  0% {
+    opacity: 0;
+    transform-origin: 50% 100%;
+    transform: scale(0, 0);
+  }
+  100% {
+    transform-origin: 50% 100%;
+    transform: scale(1, 1);
+  }
+}
+@keyframes rcSliderTooltipZoomDownOut {
+  0% {
+    transform-origin: 50% 100%;
+    transform: scale(1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform-origin: 50% 100%;
+    transform: scale(0, 0);
+  }
+}
+.rc-slider-tooltip {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  visibility: visible;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.rc-slider-tooltip * {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.rc-slider-tooltip-hidden {
+  display: none;
+}
+.rc-slider-tooltip-placement-top {
+  padding: 4px 0 8px 0;
+}
+.rc-slider-tooltip-inner {
+  padding: 6px 2px;
+  min-width: 24px;
+  height: 24px;
+  font-size: 12px;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  background-color: #6c6c6c;
+  border-radius: 6px;
+  box-shadow: 0 0 4px #d9d9d9;
+}
+.rc-slider-tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.rc-slider-tooltip-placement-top .rc-slider-tooltip-arrow {
+  bottom: 4px;
+  left: 50%;
+  margin-left: -4px;
+  border-width: 4px 4px 0;
+  border-top-color: #6c6c6c;
+}
+</style><style type="text/css">html, body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif; }
+
+@keyframes fadein {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+.vcenter-container {
+  position: relative; }
+
+.vcenter-child {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); }
+
+.main-map {
+  width: 100vw;
+  height: 100vh;
+  background-color: #111; }
+
+.slider-container {
+  position: absolute;
+  left: 0;
+  right: 40%;
+  bottom: 0;
+  z-index: 1000;
+  height: 80px;
+  margin-left: 15px;
+  margin-right: 15px;
+  pointer-events: none;
+  opacity: 0.6;
+  /* TODO: fix opacity becoming 1 even when you mouse over bottom right
+     * corner of screen (not directly over the timeline) */
+  transition: opacity .1s ease-in; }
+  .slider-container:hover {
+    opacity: 0.9; }
+  .slider-container .rc-slider {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+    position: relative;
+    pointer-events: auto;
+    animation: fadein 1s;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); }
+    .slider-container .rc-slider:before {
+      position: absolute;
+      left: -2em;
+      right: -2em;
+      top: -0.5em;
+      bottom: -1.75em;
+      content: " ";
+      background-color: #fff;
+      border-radius: 7px; }
+
+.app-root {
+  position: relative;
+  overflow: hidden; }
+
+.layer-selector .item, .org-tag-selector .item {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: 1px;
+  border: 1px solid #999;
+  color: #999;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  font-size: 0.9em;
+  position: relative;
+  cursor: pointer; }
+
+.layer-selector .item::after, .org-tag-selector .item::after {
+  content: '';
+  position: absolute;
+  border-bottom: 1px solid;
+  opacity: 0;
+  left: 50%;
+  right: 50%;
+  bottom: calc( 10px - 4px);
+  transition: color 0.2s ease, left 0.2s ease, right 0.2s ease, opacity 0.2s ease; }
+
+.layer-selector .item:hover, .org-tag-selector .item:hover {
+  color: #fff;
+  border-color: #fff; }
+
+.layer-selector .item.selected, .org-tag-selector .item.selected {
+  color: #fff;
+  border-color: #fff;
+  text-shadow: 0px 1px 0.5px; }
+
+.layer-selector .item.selected::after, .org-tag-selector .item.selected::after {
+  opacity: 1;
+  left: 10px;
+  right: 10px; }
+
+.org-tag-selector .collapsible > .heading {
+  font-size: 1em; }
+
+.org-tag-selector .heading small {
+  float: right;
+  color: #ccc;
+  font-family: "Open Sans", sans-serif; }
+
+.org-tag-selector .heading a {
+  text-decoration: underline;
+  color: #8ecfdd; }
+
+.leaflet-popup-content {
+  width: 400px !important; }
+
+h1, h2 {
+  font-family: "Lora", serif;
+  font-size: 2.2em; }
+
+.video-info {
+  max-height: 550px;
+  overflow-y: auto; }
+  .video-info h1 {
+    font-size: 1.2rem;
+    margin-top: 5px;
+    margin-bottom: 5px; }
+  .video-info p {
+    margin-top: 5px;
+    margin-bottom: 5px; }
+
+.org-tooltip {
+  overflow-x: wrap;
+  width: 350px;
+  padding: 5px;
+  max-height: 450px;
+  overflow-y: auto; }
+  .org-tooltip .logo {
+    max-width: 100%; }
+  .org-tooltip h1 {
+    font-size: 1.1rem;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    white-space: normal; }
+  .org-tooltip .assets-label {
+    color: #777;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    margin-bottom: 3px; }
+  .org-tooltip .description {
+    white-space: normal; }
+
+/* The TextOverlay component shows the explainer text on the map and contains
+ * the layer controls for showing demographic info and nearby orgs. The
+ * text-overlay-bg div darkens the map underneath the text itself. */
+.text-overlay {
+  pointer-events: none;
+  /* This div implements a sort of vignette effect that focuses attention on
+     * the bay area part of the map while darkening the map under the text. The
+     * div positioning controls the vignette shape/position, and the
+     * percentages in the background property control the softness of the
+     * vignette. */
+  /* The ::after pseudo element is simpler; it darkens the background
+     * directly under the text, with an opacity gradient on the left (vertical)
+     * border (i.e. this is not circular). This is used to strengthen the
+     * vignette directly under the text, so that if map elements (e.g. popups)
+     * appear under the left side of the text, the text is still readable. */ }
+  .text-overlay .text-overlay-bg {
+    position: absolute;
+    left: -100%;
+    right: 0%;
+    top: -400px;
+    bottom: -450px;
+    z-index: 1000;
+    background: radial-gradient(transparent 40%, rgba(0, 0, 0, 0.75) 50%); }
+  .text-overlay .text-overlay-bg::after {
+    content: '';
+    position: absolute;
+    left: 77.5%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1001;
+    background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.25) 15%); }
+  .text-overlay .text-overlay-text {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 60%;
+    z-index: 1000;
+    color: #eee;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    text-align: justify;
+    font-weight: 300;
+    font-size: 0.9rem; }
+  .text-overlay .text {
+    pointer-events: auto;
+    max-height: 100%;
+    overflow-y: auto;
+    margin-right: 45px;
+    padding-right: 15px; }
+
+.collapsible {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  /* chevron: */ }
+  .collapsible > .heading::before {
+    position: absolute;
+    content: "\BB";
+    font-size: 1.2em;
+    left: 0;
+    bottom: 0;
+    transition: transform 0.3s ease;
+    transition-delay: 0.5s; }
+  .collapsible.expanded > .heading::before {
+    transform: rotate(90deg);
+    transition-delay: 0s; }
+  .collapsible > .heading {
+    position: relative;
+    padding-left: 18px;
+    font-family: "Lora", serif;
+    font-weight: 400;
+    font-size: 1.15em;
+    margin-bottom: 8px;
+    cursor: pointer; }
+  .collapsible > .body {
+    margin-left: 18px;
+    max-height: 0;
+    overflow-y: hidden;
+    transition: max-height 0.5s ease;
+    transition-delay: 0s; }
+  .collapsible.expanded > .body {
+    max-height: 300px;
+    transition-delay: 0.3s; }
+
+.legend {
+  position: absolute;
+  z-index: 1000;
+  bottom: 80px;
+  left: 20px;
+  color: #ccc;
+  animation: fadein 1s; }
+  .legend .scale-separator {
+    display: inline-block;
+    height: 0.7em;
+    width: 100px;
+    border-left: 2px solid;
+    border-right: 2px solid;
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px; }
+  .legend .horiz-line {
+    height: 2px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transition: background 0.5s ease; }
+</style></head>
+<body class="">
+        <div id="app"><div class="app-root"><div class="text-overlay"><div class="text-overlay-bg"></div><div class="text-overlay-text vcenter-container"><div class="text vcenter-child"><h1>Explore Music in the Bay Area</h1><p>The Bay Area is perhaps best known for technology and entrepreneurship; art plays only a small role in its reputation. Despite that, a vibrant, multicultural music scene flourishes here, fueled by people of many ethnicities, backgrounds, and interests.</p><p>What does music look like in the area? What influences artists? What challenges do they face?</p><p>We have interviewed a variety of people involved in Bay Area music. You can hear more about their stories by clicking on the markers to the left.</p><p>We've also included a layer of demographic information to contextualize the changing landscape of the Bay Area, as well as a layer containing information on arts nonprofits in the Bay. You can explore them by clicking the dropdowns below. </p><div class="collapsible expanded"><div class="heading">Show demographic information</div><div class="body"><div class="layer-selector"><div class="item selected" style="color: rgb(104, 164, 253);">Hispanic population</div><div class="item" style="">Black population</div><div class="item">Asian population</div><div class="item">Pacific population</div><div class="item">Mixed population</div><div class="item">Median housing value</div><div class="item">Median income</div></div></div></div><div class="collapsible expanded"><div class="heading">Show nearby arts nonprofits</div><div class="body"><div class="org-tag-selector"><div class="collapsible expanded"><div class="heading">Categories<small>Showing all tags</small></div><div class="body"><div class="item" style="color: rgb(105, 51, 255);">Cultural</div><div class="item" style="color: rgb(241, 51, 255);">Dance</div><div class="item" style="color: rgb(255, 51, 133);">Film</div><div class="item" style="color: rgb(255, 105, 51);">Literary Arts</div><div class="item" style="color: rgb(255, 241, 51);">Music</div><div class="item" style="color: rgb(133, 255, 51);">Other</div><div class="item" style="color: rgb(51, 255, 105);">Theatre</div><div class="item" style="color: rgb(51, 255, 241);">Visual Arts</div></div></div><div class="collapsible"><div class="heading">Ethnic Affiliations<small>Showing all tags</small></div><div class="body"><div class="item" style="color: rgb(51, 51, 51);">African/Diasporic</div><div class="item" style="color: rgb(51, 51, 51);">American</div><div class="item" style="color: rgb(51, 51, 51);">Asian</div><div class="item" style="color: rgb(51, 51, 51);">European</div><div class="item" style="color: rgb(51, 51, 51);">Latin American</div><div class="item" style="color: rgb(51, 51, 51);">Middle Eastern</div><div class="item" style="color: rgb(51, 51, 51);">Multicultural</div><div class="item" style="color: rgb(51, 51, 51);">Pacific Islander</div></div></div><div class="collapsible"><div class="heading">Other tags<small>Showing all tags</small></div><div class="body"><div class="item" style="color: rgb(51, 51, 51);">Disabled</div><div class="item" style="color: rgb(51, 51, 51);">Education</div><div class="item" style="color: rgb(51, 51, 51);">Fundraising</div><div class="item" style="color: rgb(51, 51, 51);">LGBTQ</div><div class="item" style="color: rgb(51, 51, 51);">Org Support</div><div class="item" style="color: rgb(51, 51, 51);">Religious</div><div class="item" style="color: rgb(51, 51, 51);">Seniors</div><div class="item" style="color: rgb(51, 51, 51);">Women</div></div></div></div></div></div><div class="collapsible expanded"><div class="heading">About this project</div><div class="body">This project was a collaborative effort between Ryan Eberhardt, Sonja Johnson-Yu, Christopher Swenson, Francisco Izaguirre, and the Anna Schultz's course Music Ethnography of the Bay Area. The project began through a collaboration between Daniel Murray of Stanford's CSRE department, Molly Dow, the special projects advisor of PeaceTones, and Anna Schultz of Stanford's music department. After the first prototype was generated by students in Anna Schultz's 2016 class, the Haas Center funded a summer of student community-based research to assess the needs of the Bay Area arts ecosystem. This map's focus incorporates the input of a number of stakeholders, including individual artists, organizations, advocates, and funders. It offers both a birds-eye view of arts in the bay area, as well as an on-the-ground documentary glimpse of specific musicians and organizations. This project is intended to be an explorative and informative tool for understanding the Bay Area arts ecosystem.</div></div></div></div></div><div class="main-map leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(-526px, 123px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/165/396.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(857px, 345px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/165/395.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(857px, 89px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/164/396.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(601px, 345px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/166/396.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1113px, 345px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/165/397.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(857px, 601px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/164/395.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(601px, 89px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/166/395.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1113px, 89px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/164/397.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(601px, 601px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/166/397.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1113px, 601px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/165/394.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(857px, -167px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/163/396.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(345px, 345px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/167/396.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1369px, 345px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/165/398.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(857px, 857px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/164/394.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(601px, -167px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/166/394.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1113px, -167px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/163/395.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(345px, 89px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/167/395.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1369px, 89px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/163/397.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(345px, 601px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/167/397.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1369px, 601px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/164/398.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(601px, 857px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/166/398.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1113px, 857px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/163/394.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(345px, -167px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/167/394.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1369px, -167px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/163/398.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(345px, 857px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/167/398.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1369px, 857px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/162/396.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(89px, 345px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/168/396.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1625px, 345px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/162/395.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(89px, 89px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/168/395.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1625px, 89px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/162/397.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(89px, 601px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/168/397.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1625px, 601px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/162/394.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(89px, -167px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/168/394.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1625px, -167px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/162/398.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(89px, 857px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/168/398.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1625px, 857px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/161/396.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(-167px, 345px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/169/396.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1881px, 345px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/161/395.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(-167px, 89px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/169/395.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1881px, 89px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/161/397.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(-167px, 601px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/169/397.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1881px, 601px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/161/394.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(-167px, -167px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/169/394.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1881px, -167px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/161/398.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(-167px, 857px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/169/398.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1881px, 857px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/165/393.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(857px, -423px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/164/393.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(601px, -423px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/166/393.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1113px, -423px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/163/393.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(345px, -423px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/167/393.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1369px, -423px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/162/393.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(89px, -423px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/168/393.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1625px, -423px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/161/393.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(-167px, -423px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://api.tiles.mapbox.com/v4/mapbox.dark/10/169/393.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1881px, -423px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-shadow-pane"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(705px, 565px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(697px, 570px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(679px, 560px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(705px, 570px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(708px, 567px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(656px, 254px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(758px, 578px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(727px, 615px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(748px, 575px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(541px, 307px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(654px, 254px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(651px, 258px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(658px, 221px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(563px, 302px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(661px, 271px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(661px, 233px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(535px, 305px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(727px, 612px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(661px, 200px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(1023px, 705px, 0px);"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(546px, 311px, 0px);"></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-marker-pane"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(705px, 565px, 0px); z-index: 565;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(697px, 570px, 0px); z-index: 570;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(679px, 560px, 0px); z-index: 560;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(705px, 570px, 0px); z-index: 570;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(708px, 567px, 0px); z-index: 567;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(656px, 254px, 0px); z-index: 254;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(758px, 578px, 0px); z-index: 578;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(727px, 615px, 0px); z-index: 615; outline: none;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(748px, 575px, 0px); z-index: 575;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(541px, 307px, 0px); z-index: 307;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(654px, 254px, 0px); z-index: 254;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(651px, 258px, 0px); z-index: 258;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(658px, 221px, 0px); z-index: 221;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(563px, 302px, 0px); z-index: 302;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(661px, 271px, 0px); z-index: 271;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(661px, 233px, 0px); z-index: 233;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(535px, 305px, 0px); z-index: 305;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(727px, 612px, 0px); z-index: 612;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(661px, 200px, 0px); z-index: 200;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1023px, 705px, 0px); z-index: 705;"><img src="https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(546px, 311px, 0px); z-index: 311;"></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"><div class="leaflet-popup  leaflet-zoom-animated" style="opacity: 1; transform: translate3d(706px, 536px, 0px); bottom: -7px; left: -220px;"><div class="leaflet-popup-content-wrapper"><div class="leaflet-popup-content" style="width: 301px;"><div class="video-info"><h1>Monique Martinez</h1><p>Monique Martinez is a Bay Area R&amp;B singer who has performed in a variety of venues including multiple appearances as part of the Super Bowl series that takes place in SF every year. Her recent collaborations with Ivan Reyes and Templo Audio have shifted in an EDM direction. Monique aspires to continue developing her career as an independent artist and is looking forward to releasing a new EP in the coming months.</p><iframe allowfullscreen="1" data-src="//www.youtube.com/embed/D-z_lztrVO4?wmode=opaque&amp;amp;rel=0" data-unload="true" src="//www.youtube.com/embed/D-z_lztrVO4?wmode=opaque&amp;amp;rel=0" height="220px" frameborder="0" width="100%"></iframe><iframe data-unload="true" scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/238844352&amp;amp;color=ff5500&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false" height="125px" frameborder="no" width="100%"></iframe></div></div></div><div class="leaflet-popup-tip-container"><div class="leaflet-popup-tip"></div></div><a class="leaflet-popup-close-button" href="#close">×</a></div></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(42154px, 101380px, 0px) scale(512);"></div><div class="leaflet-pane leaflet-geojson-pane"><canvas class="leaflet-zoom-animated" width="588" height="1134" style="transform: translate3d(477px, -217px, 0px); width: 588px; height: 1134px;"></canvas></div><div class="leaflet-pane leaflet-arts-orgs-pane"><canvas class="leaflet-zoom-animated" width="588" height="1134" style="transform: translate3d(477px, -217px, 0px); width: 588px; height: 1134px;"></canvas></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in">+</a><a class="leaflet-control-zoom-out leaflet-disabled" href="#" title="Zoom out" role="button" aria-label="Zoom out">−</a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a></div></div></div><div style="position: absolute; inset: 0px;"></div><div style="position: absolute; inset: 0px;"></div></div><div class="slider-container"><div class="rc-slider rc-slider-with-marks"><div class="rc-slider-rail"></div><div class="rc-slider-track" style="left: 0%; width: 0%;"></div><div class="rc-slider-step"><span class="rc-slider-dot rc-slider-dot-active" style="left: 0%;"></span><span class="rc-slider-dot" style="left: 33.3333%;"></span><span class="rc-slider-dot" style="left: 66.6667%;"></span><span class="rc-slider-dot" style="left: 100%;"></span></div><div role="slider" tabindex="0" aria-valuemin="2010" aria-valuemax="2016" aria-valuenow="2010" aria-disabled="false" class="rc-slider-handle" style="left: 0%;"></div><div class="rc-slider-mark"><span class="rc-slider-mark-text rc-slider-mark-text-active" style="width: 30%; margin-left: -15%; left: 0%;">2010</span><span class="rc-slider-mark-text" style="width: 30%; margin-left: -15%; left: 33.3333%;">2012</span><span class="rc-slider-mark-text" style="width: 30%; margin-left: -15%; left: 66.6667%;">2014</span><span class="rc-slider-mark-text" style="width: 30%; margin-left: -15%; left: 100%;">2016</span></div></div></div><div class="legend"><small>0%</small><div class="scale-separator" style="border-left-color: rgb(0, 0, 0); border-right-color: rgb(152, 187, 240);"><div class="horiz-line" style="background: linear-gradient(to right, rgb(0, 0, 0), rgb(152, 187, 240));"></div></div><small>100%</small></div></div></div>
+        <script src="https://reberhardt.com/moose/bundle.js" charset="utf-8"></script>
+    <script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;3e6b73c9f7a14ee882ed43347b4127a9&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
